@@ -141,6 +141,54 @@ export default registerAs('pino-http', (): Partial<Options> => {
 });
 ```
 
+## Advanced usage
+
+### Extending message object
+
+In case if you want extend pino log object by adding more fields, you can use `buildPinoMessage` helper function, that adds hidden `Symbol` to the object and which allows to distinguish between regular log message and custom.
+
+It looks like:
+
+```typescript
+const message = buildPinoMessage('Hello World %o', { foo: 'bar' }, { data: 'the data object will be used to format the message' });
+this.logger.log(message, 'here you can also pass something that will be added to the msg string');
+```
+
+### Using request id
+
+`nestjs-pino` package has exceptional feature that allows to leverage the request-id that you might noticed previously when we added `pino-http` middleware. Essentially this is great feature, but at the moment I don't think that it should be implemented within this package anytime in the future. It can be achieved by storing this info using `AsyncLocalStorage` inside the middleware function in `main.ts` file, and then retrieved in pino mixin. But in more complex scenario you should be using open telemetry, which can handle global trace-id and pass it with every log message. Also having request object in each log message would increase it's size and make it more expensive to transfer and store. 
+
+For instance:
+```typescript
+// pino.config.ts
+
+//...registerAs...
+import { context, isSpanContextValid, trace } from '@opentelemetry/api';
+
+return {
+    mixin: () => {
+        const record = {};
+        const span = trace.getSpan(context.active());
+        if (span) {
+            const spanContext = span.spanContext();
+
+            if (isSpanContextValid(spanContext)) {
+                Object.assign(record, {
+                    trace_id: spanContext.traceId,
+                    span_id: spanContext.spanId,
+                    trace_flags: `0${spanContext.traceFlags.toString(16)}`,
+                });
+            }
+        }
+
+        return record;
+    }
+}
+//...
+```
+
+`@opentelemetry/api` package also uses `AsyncLocalStorage` under the hood, so as you can see having control over the pino configuration can allow to achieve any kind of task.
+
 ## Example
 
 ![logging example](example.png "Nestjs-Pino-Logger example")
