@@ -141,6 +141,10 @@ export default registerAs('pino-http', (): Partial<Options> => {
 });
 ```
 
+## Example
+
+![logging example](example.png "Nestjs-Pino-Logger example")
+
 ## License
 
 `@zemd/nestjs-pino-logger` released under the [LGPL-3.0 License](https://www.gnu.org/licenses/lgpl-3.0.html).
