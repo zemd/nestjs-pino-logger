@@ -5,7 +5,9 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
-    "./*": "./dist/*.js"
+    "./*": {
+      "require": "./dist/*.js"
+    }
   },
   "scripts": {
     "build": "tsc",
@@ -52,6 +54,8 @@
     "access": "restricted"
   },
   "release": {
-    "branches": ["main"]
+    "branches": [
+      "main"
+    ]
   }
 }

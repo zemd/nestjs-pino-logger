@@ -2,3 +2,4 @@
 .idea
 .node-version
 .editorconfig
+*.tsbuildinfo
