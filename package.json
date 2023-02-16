@@ -1,0 +1,53 @@
+{
+  "name": "@zemd/nestjs-pino-logger",
+  "version": "1.0.0",
+  "description": "Nestjs logger based on pino",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "semantic-release": "semantic-release --debug"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zemd/nestjs-pino-logger.git"
+  },
+  "keywords": [
+    "nestjs",
+    "pino",
+    "logger"
+  ],
+  "author": "Dmytro Zelenetskyi <dmytro.zelenetskyi@gmail.com>",
+  "license": "LGPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/zemd/nestjs-pino-logger/issues"
+  },
+  "homepage": "https://github.com/zemd/nestjs-pino-logger#readme",
+  "dependencies": {
+    "clean-stack": "3.0.1",
+    "ms": "^2.1.3"
+  },
+  "devDependencies": {
+    "@nestjs/common": "^9.3.8",
+    "@nestjs/config": "^2.3.1",
+    "@types/ms": "^0.7.31",
+    "@types/node": "^18.13.0",
+    "@zemd/tsconfig": "^1.0.3",
+    "pino": "^8.10.0",
+    "pino-pretty": "^9.2.0",
+    "semantic-release": "^20.1.0",
+    "typescript": "^4.9.5"
+  },
+  "peerDependencies": {
+    "@nestjs/common": "*",
+    "@nestjs/config": "*",
+    "pino": "*",
+    "pino-pretty": "*"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com",
+    "access": "restricted"
+  },
+  "release": {
+    "branches": ["main"]
+  }
+}
