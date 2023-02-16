@@ -18,6 +18,12 @@ always-auth=true
 npm install --save @zemd/nestjs-pino-logger
 ```
 
+you also might need:
+```bash
+npm install --save @nestjs/common @nestjs/config pino pino-http
+npm install --save-dev pino-pretty
+```
+
 ## Usage
 
 let's say you are defining AppModule:
