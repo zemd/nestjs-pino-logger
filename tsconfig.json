@@ -4,7 +4,7 @@
   "extends": "@zemd/tsconfig/tsconfig-base.json",
   "compilerOptions": {
     "outDir": "./dist",
-    "rootDir": ".",
+    "rootDir": "./src",
     "baseUrl": "src",
     "moduleResolution": "Node",
     "module": "CommonJS",

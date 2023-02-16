@@ -80,7 +80,7 @@ export default registerAs('pino', (): Partial<LoggerOptions> => {
     if (process.env.NODE_ENV !== "production") {
         // you don't need to use this transport in production, usually you would want to send logs as json object to the observability service
         targets.push({
-            target: "@zemd/nestjs-pino-logger/pino-pretty-transport.js", //path.resolve(__dirname, './pino-pretty-transport.js'),
+            target: "@zemd/nestjs-pino-logger/pino-pretty-transport.js", 
             level: process.env.NODE_ENV === "development" ? "verbose" : "error",
             options: {
                 colorize: false,

@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "Nestjs logger based on pino",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    "./*": "./dist/*.js"
+  },
   "scripts": {
     "build": "tsc",
     "semantic-release": "semantic-release --debug"
