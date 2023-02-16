@@ -158,14 +158,15 @@ this.logger.log(message, 'here you can also pass something that will be added to
 
 `nestjs-pino` package has exceptional feature that allows to leverage the request-id that you might noticed previously when we added `pino-http` middleware. Essentially this is great feature, but at the moment I don't think that it should be implemented within this package anytime in the future. It can be achieved by storing this info using `AsyncLocalStorage` inside the middleware function in `main.ts` file, and then retrieved in pino mixin. But in more complex scenario you should be using open telemetry, which can handle global trace-id and pass it with every log message. Also having request object in each log message would increase it's size and make it more expensive to transfer and store. 
 
-For instance:
+Example of using open telemetry:
 ```typescript
 // pino.config.ts
-
-//...registerAs...
 import { context, isSpanContextValid, trace } from '@opentelemetry/api';
 
+//...registerAs...
 return {
+    // ... transfer
+    // ... other pino options
     mixin: () => {
         const record = {};
         const span = trace.getSpan(context.active());
