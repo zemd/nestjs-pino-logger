@@ -6,7 +6,7 @@ import pino from "pino";
 
 export interface LoggerModuleAsyncOptions extends Pick<ModuleMetadata, 'imports'> {
   inject?: any[];
-  useFactory?: (...args: any[]) => Promise<LoggerOptions> | LoggerOptions;
+  useFactory: (...args: any[]) => Promise<LoggerOptions> | LoggerOptions;
 }
 
 @Global()
@@ -30,8 +30,8 @@ export class LoggerModule {
 
     return {
       module: LoggerModule,
-      providers: [loggerModuleOptions, pinoProvider, Logger],
-      exports: [loggerModuleOptions, pinoProvider, Logger]
+      providers: [Logger, loggerModuleOptions, pinoProvider],
+      exports: [Logger, loggerModuleOptions, pinoProvider]
     };
   }
 
@@ -40,6 +40,12 @@ export class LoggerModule {
       Logger
     ];
 
+    providers.push({
+      provide: PINO_LOGGER_OPTIONS,
+      useFactory: options.useFactory,
+      inject: options.inject || [],
+    });
+
     const pinoProvider: Provider = {
       provide: PINO_LOGGER_INSTANCE,
       useFactory: async (options: LoggerOptions) => pino(options),
@@ -47,19 +53,11 @@ export class LoggerModule {
     }
     providers.push(pinoProvider);
 
-    if (options.useFactory) {
-      providers.push({
-        provide: PINO_LOGGER_OPTIONS,
-        useFactory: options.useFactory,
-        inject: options.inject || [],
-      });
-    }
-
     return {
       module: LoggerModule,
       imports: options.imports ?? [],
       providers,
-      exports: [pinoProvider, Logger]
+      exports: [Logger, pinoProvider]
     };
   }
 }
