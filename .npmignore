@@ -3,3 +3,4 @@
 .node-version
 .editorconfig
 *.tsbuildinfo
+package-lock.json

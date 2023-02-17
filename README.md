@@ -41,7 +41,11 @@ import pinoHttpConfig from "./config/pino-http.config";
             load: [pinoConfig, pinoHttpConfig],
             // ... any other configuration options you want to use
         }),
-        LoggerModule
+        LoggerModule.forRootAsync({
+            imports: [ConfigModule],
+            useFactory: (configService: ConfigService) => configService.get<LoggerOptions>('pino'),
+            inject: [ConfigService],
+        }),
     ]
 })
 class AppModule {}
@@ -51,17 +55,17 @@ then you should inject `Logger` into your main app:
 
 ```typescript
 // main.ts
-import { Logger } from '@zemd/nestjs-pino-logger';
+import {Logger, PINO_LOGGER_INSTANCE} from '@zemd/nestjs-pino-logger';
 import pinoHttp from "pino-http";
-import type { Options } from 'pino-http';
+import type {Options} from 'pino-http';
 
-const app = await NestFactory.create(AppModule, { bufferLogs: true });
+const app = await NestFactory.create(AppModule, {bufferLogs: true});
 app.useLogger(app.get(Logger));
 
 // if you want to use pino-http ↓
 app.use(pinoHttp({
-    ...configService.get<Options>('pino-http'),
-    logger: app.get(Logger).getPinoInstance(),
+  ...configService.get<Options>('pino-http'),
+  logger: app.get(PINO_LOGGER_INSTANCE),
 }));
 ```
 
@@ -150,7 +154,11 @@ In case if you want extend pino log object by adding more fields, you can use `b
 It looks like:
 
 ```typescript
-const message = buildPinoMessage('Hello World %o', { foo: 'bar' }, { data: 'the data object will be used to format the message' });
+const message = buildPinoMessage({
+  message: 'Hello World %o',
+  mergingObject: { foo: 'bar' },
+  interpolationValues: [{ data: 'the data object will be used to format the message' }]
+});
 this.logger.log(message, 'here you can also pass something that will be added to the msg string');
 ```
 

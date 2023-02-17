@@ -1,17 +1,14 @@
 import {Injectable, LoggerService} from "@nestjs/common";
 import * as util from "node:util";
-import pino from "pino";
-import {ConfigService} from "@nestjs/config";
+import type {Logger as PinoLogger} from "pino";
 import crypto from "node:crypto";
-import {PinoMessageSymbol} from "./PinoMessageSymbol";
+import {PinoMessageSymbol} from "./logger.constants";
 
 @Injectable()
 export class Logger implements LoggerService {
-  private readonly pinoInstance: any;
   private static cache = new Map<string, any>();
 
-  constructor(private readonly configService: ConfigService) {
-    this.pinoInstance = pino(this.configService.get('pino'));
+  constructor(private readonly pinoInstance: PinoLogger) {
   }
 
   debug(message: any, ...optionalParams: any[]): any {
@@ -82,9 +79,5 @@ export class Logger implements LoggerService {
     }, 60000);
     Logger.cache.set(ctx, {inst, timeout});
     return inst;
-  }
-
-  public getPinoInstance() {
-    return this.pinoInstance;
   }
 }
