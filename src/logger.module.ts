@@ -57,7 +57,7 @@ export class LoggerModule {
       module: LoggerModule,
       imports: options.imports ?? [],
       providers,
-      exports: [Logger, pinoProvider]
+      exports: [pinoProvider, Logger]
     };
   }
 }
