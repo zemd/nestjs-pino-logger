@@ -77,7 +77,6 @@ import {registerAs} from "@nestjs/config";
 import pino from "pino";
 import {customLevels} from "@zemd/nestjs-pino-logger";
 
-// the nestjs-pino-logger requires that configuration service returns a configuration object with a `pino` key
 export default registerAs('pino', (): Partial<LoggerOptions> => {
     const targets: pino.TransportTargetOptions<Record<string, any>>[] = [];
     
