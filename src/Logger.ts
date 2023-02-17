@@ -2,13 +2,13 @@ import {Inject, Injectable, LoggerService} from "@nestjs/common";
 import * as util from "node:util";
 import type {Logger as PinoLogger} from "pino";
 import crypto from "node:crypto";
-import {PinoMessageSymbol} from "./logger.constants";
+import {PINO_LOGGER_INSTANCE, PinoMessageSymbol} from "./logger.constants";
 
 @Injectable()
 export class Logger implements LoggerService {
   private static cache = new Map<string, any>();
 
-  constructor(@Inject('PINO_LOGGER_INSTANCE') private readonly pinoInstance: PinoLogger) {
+  constructor(@Inject(PINO_LOGGER_INSTANCE) private readonly pinoInstance: PinoLogger) {
   }
 
   debug(message: any, ...optionalParams: any[]): any {

@@ -36,27 +36,22 @@ export class LoggerModule {
   }
 
   static forRootAsync(options: LoggerModuleAsyncOptions): DynamicModule {
-    const providers: Provider[] = [
-      Logger
-    ];
-
-    providers.push({
+    const optionsProvider = {
       provide: PINO_LOGGER_OPTIONS,
       useFactory: options.useFactory,
       inject: options.inject || [],
-    });
+    };
 
     const pinoProvider: Provider = {
       provide: PINO_LOGGER_INSTANCE,
-      useFactory: async (options: LoggerOptions) => pino(options),
+      useFactory: (options: LoggerOptions) => pino(options),
       inject: [PINO_LOGGER_OPTIONS],
-    }
-    providers.push(pinoProvider);
+    };
 
     return {
       module: LoggerModule,
       imports: options.imports ?? [],
-      providers,
+      providers: [optionsProvider, pinoProvider, Logger],
       exports: [pinoProvider, Logger]
     };
   }
