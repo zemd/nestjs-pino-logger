@@ -1,6 +1,6 @@
 {
   "name": "@zemd/nestjs-pino-logger",
-  "version": "1.0.0",
+  "version": "1.0.7",
   "description": "Nestjs logger based on pino",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -43,10 +43,6 @@
     "@nestjs/config": "*",
     "pino": "*",
     "pino-pretty": "*"
-  },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com",
-    "access": "restricted"
   },
   "release": {
     "branches": [
