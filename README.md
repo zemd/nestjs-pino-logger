@@ -6,14 +6,6 @@ The motivation of this package is to provide a pino logger for nestjs framework 
 
 ## Installation
 
-at first make sure you have access to the github, and update your `.npmrc` file:
-
-```
-//npm.pkg.github.com/:_authToken=${GITHUB_AUTH_TOKEN}
-@zemd:registry=https://npm.pkg.github.com
-always-auth=true
-```
-
 ```bash
 npm install --save @zemd/nestjs-pino-logger
 ```
