@@ -33,6 +33,9 @@
     "pino",
     "logger"
   ],
+  "files": [
+    "dist"
+  ],
   "author": "Dmytro Zelenetskyi <dmytro.zelenetskyi@gmail.com>",
   "license": "BlueOak-1.0.0",
   "bugs": {
