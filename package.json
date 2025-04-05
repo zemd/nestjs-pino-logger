@@ -2,15 +2,31 @@
   "name": "@zemd/nestjs-pino-logger",
   "version": "1.0.7",
   "description": "Nestjs logger based on pino",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "type": "commonjs",
   "scripts": {
-    "build": "tsc",
-    "semantic-release": "semantic-release --debug"
+    "build": "tsup",
+    "changeset": "changeset",
+    "release": "pnpm run build && changeset publish",
+    "prepare": "husky",
+    "lint": "eslint .",
+    "preinstall": "npx only-allow pnpm"
+  },
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "type": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    }
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/zemd/nestjs-pino-logger.git"
+    "url": "git+https://github.com/zemd/nestjs-pino-logger.git"
   },
   "keywords": [
     "nestjs",
@@ -18,25 +34,31 @@
     "logger"
   ],
   "author": "Dmytro Zelenetskyi <dmytro.zelenetskyi@gmail.com>",
-  "license": "LGPL-3.0-or-later",
+  "license": "BlueOak-1.0.0",
   "bugs": {
     "url": "https://github.com/zemd/nestjs-pino-logger/issues"
   },
   "homepage": "https://github.com/zemd/nestjs-pino-logger#readme",
   "dependencies": {
-    "clean-stack": "3.0.1",
+    "clean-stack": "5.2.0",
     "ms": "^2.1.3"
   },
   "devDependencies": {
-    "@nestjs/common": "^9.3.8",
-    "@nestjs/config": "^2.3.1",
-    "@types/ms": "^0.7.31",
-    "@types/node": "^18.13.0",
+    "@changesets/cli": "^2.28.1",
+    "@nestjs/common": "^11.0.13",
+    "@nestjs/config": "^4.0.2",
+    "@types/ms": "^2.1.0",
+    "@types/node": "^22.14.0",
+    "@zemd/eslint-ts": "^1.0.13",
     "@zemd/tsconfig": "^1.0.3",
-    "pino": "^8.10.0",
-    "pino-pretty": "^9.2.0",
-    "semantic-release": "^20.1.0",
-    "typescript": "^4.9.5"
+    "eslint": "^9.24.0",
+    "husky": "^9.1.7",
+    "only-allow": "^1.2.1",
+    "pino": "^9.6.0",
+    "pino-pretty": "^13.0.0",
+    "prettier": "^3.5.3",
+    "tsup": "^8.4.0",
+    "typescript": "^5.8.3"
   },
   "peerDependencies": {
     "@nestjs/common": "*",
@@ -44,9 +66,5 @@
     "pino": "*",
     "pino-pretty": "*"
   },
-  "release": {
-    "branches": [
-      "main"
-    ]
-  }
+  "packageManager": "pnpm@10.7.1+sha512.2d92c86b7928dc8284f53494fb4201f983da65f0fb4f0d40baafa5cf628fa31dae3e5968f12466f17df7e97310e30f343a648baea1b9b350685dafafffdf5808"
 }

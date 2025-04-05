@@ -1,10 +1,17 @@
-import {DynamicModule, Global, Module, ModuleMetadata, Provider} from "@nestjs/common";
-import {Logger} from "./Logger";
-import {PINO_LOGGER_INSTANCE, PINO_LOGGER_OPTIONS} from "./logger.constants";
-import type {LoggerOptions} from "pino";
+import {
+  type DynamicModule,
+  Global,
+  Module,
+  type ModuleMetadata,
+  type Provider,
+} from "@nestjs/common";
+import { Logger } from "./Logger";
+import { PINO_LOGGER_INSTANCE, PINO_LOGGER_OPTIONS } from "./logger.constants";
+import type { LoggerOptions } from "pino";
 import pino from "pino";
 
-export interface LoggerModuleAsyncOptions extends Pick<ModuleMetadata, 'imports'> {
+export interface LoggerModuleAsyncOptions
+  extends Pick<ModuleMetadata, "imports"> {
   inject?: any[];
   useFactory: (...args: any[]) => Promise<LoggerOptions> | LoggerOptions;
 }
@@ -12,9 +19,6 @@ export interface LoggerModuleAsyncOptions extends Pick<ModuleMetadata, 'imports'
 @Global()
 @Module({})
 export class LoggerModule {
-  constructor() {
-  }
-
   static forRoot(options: LoggerOptions): DynamicModule {
     const loggerModuleOptions = {
       provide: PINO_LOGGER_OPTIONS,
@@ -31,7 +35,7 @@ export class LoggerModule {
     return {
       module: LoggerModule,
       providers: [Logger, loggerModuleOptions, pinoProvider],
-      exports: [Logger, loggerModuleOptions, pinoProvider]
+      exports: [Logger, loggerModuleOptions, pinoProvider],
     };
   }
 
@@ -44,7 +48,9 @@ export class LoggerModule {
 
     const pinoProvider: Provider = {
       provide: PINO_LOGGER_INSTANCE,
-      useFactory: (options: LoggerOptions) => pino(options),
+      useFactory: (options: LoggerOptions) => {
+        return pino(options);
+      },
       inject: [PINO_LOGGER_OPTIONS],
     };
 
@@ -52,7 +58,7 @@ export class LoggerModule {
       module: LoggerModule,
       imports: options.imports ?? [],
       providers: [optionsProvider, pinoProvider, Logger],
-      exports: [pinoProvider, Logger]
+      exports: [pinoProvider, Logger],
     };
   }
 }

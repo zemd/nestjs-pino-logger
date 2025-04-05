@@ -1,6 +1,6 @@
-export const PinoMessageSymbol = Symbol('__PinoMessageSymbol');
-export const PINO_LOGGER_OPTIONS = 'PinoLoggerOptions';
-export const PINO_LOGGER_INSTANCE = 'PinoLoggerInstance';
+export const PinoMessageSymbol = Symbol("__PinoMessageSymbol");
+export const PINO_LOGGER_OPTIONS = "PinoLoggerOptions";
+export const PINO_LOGGER_INSTANCE = "PinoLoggerInstance";
 export const customLevels = {
   error: 50,
   warn: 40,

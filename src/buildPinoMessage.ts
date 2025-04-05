@@ -1,4 +1,4 @@
-import {PinoMessageSymbol} from "./logger.constants";
+import { PinoMessageSymbol } from "./logger.constants";
 
 export type PinoMessageType = {
   message: string;
@@ -6,11 +6,8 @@ export type PinoMessageType = {
   interpolationValues?: any[];
 };
 
-export const buildPinoMessage = (message: PinoMessageType) => {
-  return {
-    [PinoMessageSymbol]: true,
-    mergingObject: message.mergingObject,
-    message: message.message,
-    interpolationValues: message.interpolationValues
-  };
-}
+export const buildPinoMessage = (
+  message: PinoMessageType,
+): PinoMessageType & { [PinoMessageSymbol]: boolean } => {
+  return Object.assign(message, { [PinoMessageSymbol]: true });
+};

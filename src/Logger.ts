@@ -1,70 +1,88 @@
-import {Inject, Injectable, LoggerService} from "@nestjs/common";
+import { Inject, Injectable, type LoggerService } from "@nestjs/common";
 import * as util from "node:util";
-import type {Logger as PinoLogger} from "pino";
+import type { Logger as PinoLogger } from "pino";
 import crypto from "node:crypto";
-import {PINO_LOGGER_INSTANCE, PinoMessageSymbol} from "./logger.constants";
+import { PINO_LOGGER_INSTANCE, PinoMessageSymbol } from "./logger.constants";
 
 @Injectable()
 export class Logger implements LoggerService {
   private static cache = new Map<string, any>();
+  private readonly pinoInstance: PinoLogger;
 
-  constructor(@Inject(PINO_LOGGER_INSTANCE) private readonly pinoInstance: PinoLogger) {
+  constructor(@Inject(PINO_LOGGER_INSTANCE) pinoInstance: PinoLogger) {
+    this.pinoInstance = pinoInstance;
   }
 
   debug(message: any, ...optionalParams: any[]): any {
-    this.doLog('debug', message, ...optionalParams);
+    this.doLog("debug", message, ...optionalParams);
   }
 
   error(message: any, ...optionalParams: any[]): any {
-    this.doLog('error', message, ...optionalParams);
+    this.doLog("error", message, ...optionalParams);
   }
 
   log(message: any, ...optionalParams: any[]): any {
-    this.doLog('log', message, ...optionalParams);
+    this.doLog("log", message, ...optionalParams);
   }
 
   verbose(message: any, ...optionalParams: any[]): any {
-    this.doLog('verbose', message, ...optionalParams);
+    this.doLog("verbose", message, ...optionalParams);
   }
 
   warn(message: any, ...optionalParams: any[]): any {
-    this.doLog('warn', message, ...optionalParams);
+    this.doLog("warn", message, ...optionalParams);
   }
 
   private doLog(level: string, message: any, ...optionalParams: any[]): any {
-    const context = optionalParams[optionalParams.length - 1];
-    const params = optionalParams.slice(0, -1).filter((p) => p !== undefined);
+    const context = optionalParams.at(-1);
+    const params = optionalParams.slice(0, -1).filter((p) => {
+      return p !== undefined;
+    });
     const inst = this.getPinoChildInst(context);
 
     // build output
-    if (typeof message === 'object' && !Array.isArray(message) && message[PinoMessageSymbol]) {
+    if (
+      typeof message === "object" &&
+      !Array.isArray(message) &&
+      message[PinoMessageSymbol]
+    ) {
       const formattedMsg = util.formatWithOptions(
-        {colors: true},
+        { colors: true },
         message.message,
         ...message.interpolationValues,
-        ...params
+        ...params,
       );
       const msg = util.formatWithOptions(
-        {colors: false},
+        { colors: false },
         message.message,
         ...message.interpolationValues,
-        ...params
+        ...params,
       );
 
-      inst[level](Object.assign({}, message.mergingObject, {formattedMsg}), msg);
+      inst[level](
+        Object.assign({}, message.mergingObject, { formattedMsg }),
+        msg,
+      );
     }
     if (message instanceof Error) {
-      const msg = params.length ? util.formatWithOptions({colors: true}, ...params) : '';
-      inst[level]({err: message}, msg);
+      const msg =
+        params.length > 0
+          ? util.formatWithOptions({ colors: true }, ...params)
+          : "";
+      inst[level]({ err: message }, msg);
     } else {
-      const formattedMsg = util.formatWithOptions({colors: true}, message, ...params);
-      const msg = util.formatWithOptions({colors: false}, message, ...params);
+      const formattedMsg = util.formatWithOptions(
+        { colors: true },
+        message,
+        ...params,
+      );
+      const msg = util.formatWithOptions({ colors: false }, message, ...params);
 
-      inst[level]({formattedMsg}, msg);
+      inst[level]({ formattedMsg }, msg);
     }
   }
 
-  private getPinoChildInst(context: string) {
+  private getPinoChildInst(context?: string) {
     const ctx = context ?? crypto.randomUUID();
     let inst;
     if (Logger.cache.has(ctx)) {
@@ -72,12 +90,12 @@ export class Logger implements LoggerService {
       clearTimeout(instConfig.timeout);
       inst = instConfig.inst;
     } else {
-      inst = this.pinoInstance.child({context: ctx});
+      inst = this.pinoInstance.child({ context: ctx });
     }
     const timeout = setTimeout(() => {
       Logger.cache.delete(ctx);
-    }, 60000);
-    Logger.cache.set(ctx, {inst, timeout});
+    }, 60_000);
+    Logger.cache.set(ctx, { inst, timeout });
     return inst;
   }
 }
