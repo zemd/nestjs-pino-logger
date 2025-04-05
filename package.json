@@ -4,7 +4,7 @@
   "description": "Nestjs logger based on pino",
   "type": "commonjs",
   "scripts": {
-    "build": "tsup",
+    "build": "tsup --minify",
     "changeset": "changeset",
     "release": "pnpm run build && changeset publish",
     "prepare": "husky",
