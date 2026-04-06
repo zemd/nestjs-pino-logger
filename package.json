@@ -2,7 +2,7 @@
   "name": "@zemd/nestjs-pino-logger",
   "version": "1.1.1",
   "description": "Nestjs logger based on pino",
-  "type": "commonjs",
+  "type": "module",
   "scripts": {
     "build": "tsdown --minify",
     "changeset": "changeset",
