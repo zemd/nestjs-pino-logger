@@ -1,5 +1,11 @@
 # @zemd/nestjs-pino-logger
 
+## 1.2.0
+
+### Minor Changes
+
+- 965adb4: Repository maintenance
+
 ## 1.1.1
 
 ### Patch Changes
