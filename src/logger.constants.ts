@@ -1,4 +1,4 @@
-export const PinoMessageSymbol = Symbol("__PinoMessageSymbol");
+export const PinoMessageSymbol: unique symbol = Symbol("__PinoMessageSymbol");
 export const PINO_LOGGER_OPTIONS = "PinoLoggerOptions";
 export const PINO_LOGGER_INSTANCE = "PinoLoggerInstance";
 export const customLevels = {

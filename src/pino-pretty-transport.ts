@@ -100,7 +100,7 @@ function formatStack(title: string, stack: string): string {
   )}${colorsMap["dim"]?.end}${colorsMap["red"]?.end}`;
 }
 
-export default (opts: any) => {
+export default (opts: any): pinoPretty.PrettyStream => {
   let lastTimestampAt = 0;
   return pinoPretty({
     ...opts,
