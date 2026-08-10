@@ -40,8 +40,8 @@ importers:
         specifier: 3.1.1
         version: 3.1.1(eslint@10.8.0)(typescript@7.0.2)
       '@zemd/tsconfig':
-        specifier: 2.0.0
-        version: 2.0.0
+        specifier: 2.1.0
+        version: 2.1.0
       eslint:
         specifier: 10.8.0
         version: 10.8.0
@@ -730,8 +730,8 @@ packages:
     peerDependencies:
       eslint: '>=9.2.0 || >=10.0.0'
 
-  '@zemd/tsconfig@2.0.0':
-    resolution: {integrity: sha512-0MKLyi8IDRgiPlFh7mEm5RWAVtFiDldSiKlKXnWYYMkBcm3asEaIqrdXChV8z1GUvgImp0Z8VzXSCLtb0QBkiA==}
+  '@zemd/tsconfig@2.1.0':
+    resolution: {integrity: sha512-9S+ZFYX5bGBfr2D1a80WvS69GvUTCIKFbyaND5yHq5MiP8RFD0fxHOhOchE7nWqAoSq67P63b32DyXw/vM9M8Q==}
 
   acorn-jsx@5.3.2:
     resolution: {integrity: sha512-rq9s+JNhf0IChjtDXxllJ7g41oZk5SlXtp0LHwyA5cejwn7vKmKp4pPri6YEePv2PU65sAsegbXtIinmDFDXgQ==}
@@ -2367,7 +2367,7 @@ snapshots:
       - supports-color
       - typescript
 
-  '@zemd/tsconfig@2.0.0': {}
+  '@zemd/tsconfig@2.1.0': {}
 
   acorn-jsx@5.3.2(acorn@8.17.0):
     dependencies:
