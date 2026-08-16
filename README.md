@@ -1,3 +1,8 @@
+> [!CAUTION]
+> The code has been moved to [https://github.com/zemd/js](https://github.com/zemd/js/tree/main/integrations/nestjs-pino-logger)
+
+---
+
 [![npm](https://img.shields.io/npm/v/@zemd/nestjs-pino-logger?color=0000ff&label=npm&labelColor=000)](https://npmjs.com/package/@zemd/nestjs-pino-logger)
 
 <p align="center">
